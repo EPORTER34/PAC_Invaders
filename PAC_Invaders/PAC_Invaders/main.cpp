@@ -6,14 +6,12 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!");
-    sf::CircleShape shape(100.f);
     Vector2f v = { 0,0 };
 
     Enemy thing(v, 3);
     Texture temp;
     temp.loadFromFile("WSU_Logo.png");
     thing.setTexture(temp);
-    shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen())
     {
@@ -26,7 +24,6 @@ int main()
         window.clear();
 
         window.draw(thing);
-        window.draw(shape);
         window.display();
     }
 
