@@ -5,6 +5,7 @@ class Enemy : public HitBox
 {
 public:
 	Enemy(Vector2f& newVelocity, int newHealth);
+	Enemy();
 	int getHealth();
 	Vector2f getDefaultPosition();
 	void setHealth(int newHealth);

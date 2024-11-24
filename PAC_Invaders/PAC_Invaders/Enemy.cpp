@@ -2,9 +2,15 @@
 
 Enemy::Enemy(Vector2f& newVelocity, int newHealth) : HitBox(newVelocity)
 {
-	setScale({ .06f,.06f });
 	health = newHealth;
 	cycle = 0;
+}
+
+Enemy::Enemy()
+{
+	health = 0;
+	cycle = 0;
+	defaultPosition = { 0,0 };
 }
 
 int Enemy::getHealth()
