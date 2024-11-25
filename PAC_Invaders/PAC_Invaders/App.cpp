@@ -1,7 +1,8 @@
 #include "App.hpp"
 
-App::App() : window(VideoMode(1920/2, 1080/2), "Pac_Invaders")
+App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 {
+    //setting logo textures
 	Logos[0].loadFromFile("WSU_Logo.png");
 	Logos[1].loadFromFile("UW_Logo.png");
 	Logos[2].loadFromFile("Oregon_Logo.png");
@@ -12,56 +13,63 @@ App::App() : window(VideoMode(1920/2, 1080/2), "Pac_Invaders")
 	Logos[7].loadFromFile("Arizona_Logo.png");
 	Logos[8].loadFromFile("ASU_Logo.png");
 
-    for (int i = 0; i < 10; i++)
+    //loading and placing each enemy
+    for (int row = 0; row < 3; row++)
     {
-        if (i < 2 || i > 7)
+        for (int column = 0; column < 10; column++)
         {
-            enemies[i].setTexture(Logos[6]);
-            enemies[i].setHealth(1);
+            switch (row)
+            {
+            case 0:
+                if (column < 3 || column > 6)
+                {
+                    enemies[column].setTexture(Logos[6]);
+                    enemies[column].setHealth(1);
+                }
+                else
+                {
+                    enemies[column].setTexture(Logos[2]);
+                    enemies[column].setHealth(3);
+                }
+                break;
+            case 1:
+                if (column < 2 || column > 7)
+                {
+                    enemies[column + 10].setTexture(Logos[7]);
+                }
+                else if (column < 4 || column > 5)
+                {
+                    enemies[column + 10].setTexture(Logos[8]);
+                }
+                else
+                {
+                    enemies[column + 10].setTexture(Logos[5]);
+                    enemies[column + 10].setScale(1.1, 1.1);
+                }
+                enemies[column + 10].setHealth(2);
+                break;
+            case 2:
+                if (column < 2 || column > 7)
+                {
+                    enemies[column + 20].setTexture(Logos[4]);
+                    enemies[column + 20].setScale(1.5, 1.5);
+                }
+                else if (column < 4 || column > 5)
+                {
+                    enemies[column + 20].setTexture(Logos[3]);
+                }
+                else
+                {
+                    enemies[column + 20].setTexture(Logos[1]);
+                }
+                enemies[column + 20].setHealth(1);
+                break;
+            }
+            enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
         }
-        else
-        {
-            enemies[i].setTexture(Logos[2]); 
-            enemies[i].setHealth(3);
-        }
-        enemies[i].setPosition(100*i + 5, 25);
-        
     }
-    for (int i = 10; i < 20; i++)
-    {
-        if (i < 12 || i > 18)
-        {
-            enemies[i].setTexture(Logos[7]);
-        }
-        else if (i < 14 || i > 15)
-        {
-            enemies[i].setTexture(Logos[8]);
-        }
-        else
-        {
-            enemies[i].setTexture(Logos[5]);
-        }
-        enemies[i].setPosition(100 * (i - 10) + 5, 80);
-        enemies[i].setHealth(2);
-    }
-    for (int i = 20; i < 30; i++)
-    {
-        if (i < 22 || i > 28)
-        {
-            enemies[i].setTexture(Logos[4]);
-            enemies[i].setScale(1.5, 1.5);
-        }
-        else if ( i < 24 || i > 25)
-        {
-            enemies[i].setTexture(Logos[3]);
-        }
-        else
-        {
-            enemies[i].setTexture(Logos[1]);
-        }
-        enemies[i].setPosition(100 * (i - 20) + 5, 135);
-        enemies[i].setHealth(1);
-    }
+
+
 }
 
 void App::run()
@@ -78,33 +86,33 @@ void App::run()
         window.clear();
 
 
-        draw();
-        move();
-        checkForWalls();
+        drawEnemies();
+        moveEnemies();
+        checkForWallsEnemies();
 
         window.display();
     }
 }
 
-void App::draw()
+void App::drawEnemies()
 {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 40; i++)
     {
         window.draw(enemies[i]);
     }
 }
 
-void App::move()
+void App::moveEnemies()
 {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 40; i++)
     {
         enemies[i].move(enemies[i].getVelocity());
     }
 }
 
-void App::checkForWalls()
+void App::checkForWallsEnemies()
 {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 40; i++)
     {
         enemies[i].checkForWalls();
     }

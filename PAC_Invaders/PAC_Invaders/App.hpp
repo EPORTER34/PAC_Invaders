@@ -11,10 +11,10 @@ public:
 	void run();
 private:
 	Texture Logos[9];
-	Enemy enemies[50];
+	Enemy enemies[40];
 	RenderWindow window;
 
-	void draw();
-	void move();
-	void checkForWalls();
+	void drawEnemies();
+	void moveEnemies();
+	void checkForWallsEnemies();
 };
