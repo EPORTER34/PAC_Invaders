@@ -21,6 +21,9 @@
     <ClCompile Include="hitBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="wsuPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.hpp">
@@ -29,5 +32,13 @@
     <ClInclude Include="hitBox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="wsuPlayer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="WSU_Logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
