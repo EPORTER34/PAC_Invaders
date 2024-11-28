@@ -2,6 +2,7 @@
 
 App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 {
+
     //setting logo textures
 	Logos[0].loadFromFile("WSU_Logo.png");
 	Logos[1].loadFromFile("UW_Logo.png");
@@ -12,6 +13,7 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 	Logos[6].loadFromFile("USC_Logo.png");
 	Logos[7].loadFromFile("Arizona_Logo.png");
 	Logos[8].loadFromFile("ASU_Logo.png");
+
 
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
@@ -70,10 +72,12 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     }
 
 
+
 }
 
 void App::run()
 {
+    Player player(480, window.getSize().y - 100, "WSU_Logo.png");
 
     while (window.isOpen())
     {
@@ -87,6 +91,8 @@ void App::run()
 
 
         drawEnemies();
+        player.draw(window);
+        player.update();
         moveEnemies();
         checkForWallsEnemies();
 
