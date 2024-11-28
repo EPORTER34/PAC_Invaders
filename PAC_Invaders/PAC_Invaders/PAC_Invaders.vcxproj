@@ -133,11 +133,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="hitBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="wsuPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App.hpp" />
+    <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="header.hpp" />
     <ClInclude Include="hitBox.hpp" />
     <ClInclude Include="wsuPlayer.hpp" />

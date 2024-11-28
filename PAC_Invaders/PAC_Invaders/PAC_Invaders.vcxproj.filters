@@ -22,6 +22,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wsuPlayer.cpp">
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -40,5 +44,11 @@
     <Image Include="WSU_Logo.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

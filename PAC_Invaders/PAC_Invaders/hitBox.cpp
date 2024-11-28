@@ -6,6 +6,11 @@ HitBox::HitBox(Vector2f Velocity)
 	velocity = Velocity;
 }
 
+HitBox::HitBox()
+{
+	velocity = { 0,0 };
+}
+
 
 HitBox::~HitBox()
 {
