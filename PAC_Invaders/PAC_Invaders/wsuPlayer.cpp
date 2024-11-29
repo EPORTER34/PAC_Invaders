@@ -42,3 +42,5 @@ void Player::playerBounds(RenderWindow& window)
 	player.setPosition(position);//updating where the position is
 
 }
+
+

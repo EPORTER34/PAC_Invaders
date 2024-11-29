@@ -91,13 +91,25 @@ void App::run()
 
 
         drawEnemies();
-        player.draw(window);
-        player.update();
+        drawPlayer(player);
+        movePlayer(player);
         moveEnemies();
         checkForWallsEnemies();
 
         window.display();
     }
+}
+
+
+void App::drawPlayer(Player& player)
+{
+    player.draw(window);
+}
+
+void App::movePlayer(Player& player)
+{
+    player.update();
+    player.playerBounds(window);
 }
 
 void App::drawEnemies()
