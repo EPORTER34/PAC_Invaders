@@ -1,5 +1,6 @@
 #pragma once
 #include "hitBox.hpp"
+#include "Projectile.hpp"
 
 class Enemy : public HitBox
 {
@@ -12,6 +13,7 @@ public:
 	void setDefaultPosition(const Vector2f& newDefault);
 	void checkForWalls();
 	int getCycle();
+	void fireFootballs(Projectile& football);
 protected:
 	int health;
 	Vector2f defaultPosition;

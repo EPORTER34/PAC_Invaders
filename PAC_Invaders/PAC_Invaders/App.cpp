@@ -13,8 +13,10 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 	Logos[6].loadFromFile("USC_Logo.png");
 	Logos[7].loadFromFile("Arizona_Logo.png");
 	Logos[8].loadFromFile("ASU_Logo.png");
+    Logos[9].loadFromFile("Game_Background.png");
 
 
+    background.setTexture(Logos[9]);
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -78,6 +80,9 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 void App::run()
 {
     Player player(480, window.getSize().y - 100, "WSU_Logo.png");
+    Projectile football;
+    bool enemyProj = false;
+
 
     while (window.isOpen())
     {
@@ -89,12 +94,33 @@ void App::run()
         }
         window.clear();
 
-
+        window.draw(background);
         drawEnemies();
         drawPlayer(player);
+
+        if (enemyProj)
+        {
+            window.draw(football);
+            enemies[28].fireFootballs(football);
+            if (football.getGlobalBounds().intersects(player.getGlobalBounds()))
+            {
+                enemyProj = false;
+                cout << "Boom!";
+            }
+        }
+        if (football.getPosition().y >= 540)
+        {
+            enemyProj = false;
+        }
         movePlayer(player);
         moveEnemies();
         checkForWallsEnemies();
+
+        if (Keyboard::isKeyPressed(Keyboard::Key::Space))
+        {
+            football.setPosition(enemies[28].getPosition().x, enemies[28].getPosition().y);
+            enemyProj = true;
+        }
 
         window.display();
     }

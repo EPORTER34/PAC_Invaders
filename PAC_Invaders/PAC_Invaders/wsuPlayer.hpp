@@ -1,7 +1,7 @@
 #pragma once
 #include "header.hpp"
 
-class Player 
+class Player : public Sprite
 {
 public:
 	Player(float x = 0.0, float y = 0.0, const string& spriteFile = "WSU_Logo.png");
@@ -13,6 +13,5 @@ public:
 	
 
 private:
-	Sprite player;
 	Texture texture; //using texture class
 };
