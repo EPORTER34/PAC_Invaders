@@ -23,4 +23,5 @@ private:
 	void drawEnemies();
 	void moveEnemies();
 	void checkForWallsEnemies();
+	void enemyFire(Projectile*& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime);
 };
