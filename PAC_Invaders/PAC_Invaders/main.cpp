@@ -6,6 +6,8 @@
 
 int main()
 {
+    srand(time(0));
+
     App temp;
     temp.run();
     return 0;

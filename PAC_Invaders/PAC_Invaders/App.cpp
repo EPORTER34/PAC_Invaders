@@ -13,8 +13,10 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 	Logos[6].loadFromFile("USC_Logo.png");
 	Logos[7].loadFromFile("Arizona_Logo.png");
 	Logos[8].loadFromFile("ASU_Logo.png");
+    Logos[9].loadFromFile("Game_Background.png");
 
 
+    background.setTexture(Logos[9]);
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -78,6 +80,16 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 void App::run()
 {
     Player player(480, window.getSize().y - 100, "WSU_Logo.png");
+    Projectile* footballs = new Projectile[100];
+    Clock clock;
+
+    int dropTime = 5;
+    int inc = 0;
+    bool enemyProj = false;
+    
+
+
+
 
     while (window.isOpen())
     {
@@ -88,16 +100,34 @@ void App::run()
                 window.close();
         }
         window.clear();
+        window.draw(background);
 
-
+        enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
         drawEnemies();
-        player.draw(window);
-        player.update();
+        drawPlayer(player);
+
+        
+        
+        movePlayer(player);
         moveEnemies();
         checkForWallsEnemies();
 
+        
+
         window.display();
     }
+}
+
+
+void App::drawPlayer(Player& player)
+{
+    player.draw(window);
+}
+
+void App::movePlayer(Player& player)
+{
+    player.update();
+    player.playerBounds(window);
 }
 
 void App::drawEnemies()
@@ -123,3 +153,47 @@ void App::checkForWallsEnemies()
         enemies[i].checkForWalls();
     }
 }
+
+void App::enemyFire(Projectile*& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime)
+{
+    int randEnemy = rand() % 30;
+
+    if (clock.getElapsedTime().asSeconds() >= 5) // start at 5
+    {
+        if ((int)clock.getElapsedTime().asSeconds() == dropTime) // rounhds the time off so that we don't skip over the value
+        {
+            randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
+            footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
+            inc++;
+            projFired = true;
+            dropTime += rand() % 7 + 1;
+        }
+    }
+
+    if (projFired)
+    {
+        for (int i = 0; i < inc; i++)
+        {
+            window.draw(footballs[i]);
+            enemies[randEnemy].fireFootballs(footballs[i]);
+
+            if (footballs[i].getGlobalBounds().intersects(player.getGlobalBounds()))
+            {
+                cout << "Boom!" << endl;
+                projFired = false;
+            }
+        }
+        
+    }
+
+    if (footballs != nullptr)
+    {
+        if (footballs[inc].getPosition().y >= 540)
+        {
+            inc++;
+            projFired = false;
+        }
+    }
+}
+
+
