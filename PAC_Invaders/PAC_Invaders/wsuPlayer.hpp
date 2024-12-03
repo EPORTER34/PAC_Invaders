@@ -1,5 +1,6 @@
 #pragma once
 #include "header.hpp"
+#include "Projectile.hpp"
 
 class Player : public Sprite
 {
@@ -12,6 +13,8 @@ public:
 
 	void setHealth(int newHealth);
 	int getHealth();
+
+	void fireFootballs(Projectile& football);
 
 private:
 	Texture texture; //using texture class
