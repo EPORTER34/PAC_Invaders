@@ -13,7 +13,7 @@ public:
 	void run();
 private:
 	Texture Logos[10];
-	Enemy enemies[40];
+	Enemy enemies[30];
 	RenderWindow window;
 	Player player;
 	Sprite background;

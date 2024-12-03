@@ -95,7 +95,7 @@ void App::run()
     int dropTime = 3;
     int inc = 0;
     bool enemyProj = false;
-    
+    int menu = 0;
 
     
 
@@ -111,18 +111,63 @@ void App::run()
         window.clear();
         window.draw(background);
 
-        if (player.getHealth() > 0)
+        switch (menu)
         {
+        case 0: //main menu
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num1)) //hit play
+            {
+                menu = 2;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num2)) //hit how to play
+            {
+                menu = 1;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num3)) //hit exit
+            {
+                window.close();
+            }
+            break;
+        case 1: //how to play
+            break;
+        case 2: //main game
             enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
             drawEnemies();
             drawPlayer(player);
             displayLives(player);
             movePlayer(player);
             moveRow(movementClock);
-        }
-        else
-        {
+            if (player.getHealth() <= 0)
+            {
+                menu = 3;
+            }
+            break;
+        case 3: //game over screen
             window.draw(gameOverText);
+            if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+            {
+                menu = 0;
+                player.setHealth(3);
+                for (int i = 29; i > 0; i--) //resetting enemy health
+                {
+                    if (i > 19)
+                    {
+                        enemies[i].setHealth(1);
+                    }
+                    else if (i > 9)
+                    {
+                        enemies[i].setHealth(2);
+                    }
+                    else if ( i < 3 || i > 7)
+                    {
+                        enemies[i].setHealth(1);
+                    }
+                    else
+                    {
+                        enemies[i].setHealth(3);
+                    }
+                }
+            }
+            break;
         }
         
         
@@ -138,7 +183,7 @@ void App::moveRow(Clock& movementClock)
     if (movementClock.getElapsedTime().asSeconds() >= 20)
     {
         movementClock.restart();
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 30; i++)
         {
             enemies[i].setPosition(enemies[i].getPosition().x, enemies[i].getPosition().y + 50);
         }
@@ -158,7 +203,7 @@ void App::movePlayer(Player& player)
 
 void App::drawEnemies()
 {
-    for (int i = 0; i < 40; i++)
+    for (int i = 0; i < 30; i++)
     {
         if (enemies[i].getHealth() > 0)
         {
