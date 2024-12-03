@@ -15,11 +15,11 @@ void Player::update()
 {
 	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 	{
-		this->move(-0.1f, 0.0); //feel free to change speed if its too fast or slow
+		this->move(-0.2f, 0.0); //feel free to change speed if its too fast or slow
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 	{
-		this->move(0.1f, 0.0f);
+		this->move(0.2f, 0.0f);
 	}
 }
 

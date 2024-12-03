@@ -79,7 +79,7 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 
 void App::run()
 {
-    Player player(480, window.getSize().y - 100, "WSU_Logo.png");
+    Player player(480, window.getSize().y - 100, 3, "WSU_Logo.png");
     Projectile* footballs = new Projectile[100];
     Clock clock;
 
@@ -106,6 +106,7 @@ void App::run()
         enemyFire(footballs, player, inc, enemyProj, clock, dropTime, finished);
         drawEnemies();
         drawPlayer(player);
+        displayLives(player);
 
         
         
@@ -200,6 +201,44 @@ void App::enemyFire(Projectile*& footballs, Player& player, int& inc, bool& proj
             finished++;
         }
     }
+}
+
+void App::displayLives(Player& player)
+{
+    vector<Sprite> logos(3);
+    Texture texture;
+
+    if (!texture.loadFromFile("WSU_Logo.png"))
+    {
+        cout << "error getting sprite";
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        logos[i].setTexture(texture);
+        logos[i].setScale(.5, .5);
+    }
+
+    logos[0].setPosition(850, 500);
+    logos[1].setPosition(880, 500);
+    logos[2].setPosition(910, 500);
+
+    if (player.getHealth() == 3)
+    {
+        window.draw(logos[0]);
+        window.draw(logos[1]);
+        window.draw(logos[2]);
+    }
+    else if (player.getHealth() == 2)
+    {
+        window.draw(logos[0]);
+        window.draw(logos[1]);
+    }
+    else if (player.getHealth() == 1)
+    {
+        window.draw(logos[0]);
+    }
+    
 }
 
 

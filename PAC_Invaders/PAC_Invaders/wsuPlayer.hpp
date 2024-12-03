@@ -13,8 +13,6 @@ public:
 	void setHealth(int newHealth);
 	int getHealth();
 
-	
-
 private:
 	Texture texture; //using texture class
 	int health;
