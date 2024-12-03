@@ -1,10 +1,5 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy(Vector2f& newVelocity, int newHealth) : HitBox(newVelocity)
-{
-	health = newHealth;
-}
-
 Enemy::Enemy()
 {
 	health = 0;

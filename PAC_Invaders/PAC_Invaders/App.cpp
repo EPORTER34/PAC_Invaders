@@ -15,8 +15,8 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 	Logos[8].loadFromFile("ASU_Logo.png");
     Logos[9].loadFromFile("Game_Background.png");
 
-
     background.setTexture(Logos[9]);
+
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -111,9 +111,7 @@ void App::run()
         
         
         movePlayer(player);
-        moveEnemies();
         moveRow(movementClock);
-        checkForWallsEnemies();
 
         
 
@@ -153,22 +151,6 @@ void App::drawEnemies()
         {
             window.draw(enemies[i]);
         }
-    }
-}
-
-void App::moveEnemies()
-{
-    for (int i = 0; i < 40; i++)
-    {
-        enemies[i].move(enemies[i].getVelocity());
-    }
-}
-
-void App::checkForWallsEnemies()
-{
-    for (int i = 0; i < 40; i++)
-    {
-        enemies[i].checkForWalls();
     }
 }
 

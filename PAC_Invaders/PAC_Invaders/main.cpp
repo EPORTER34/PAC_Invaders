@@ -1,5 +1,4 @@
 #include "header.hpp"
-#include "hitBox.hpp"
 #include "wsuPlayer.hpp"
 #include "Enemy.hpp"
 #include "App.hpp"
