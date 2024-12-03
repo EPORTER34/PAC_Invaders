@@ -168,7 +168,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
             footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
             inc++;
             projFired = true;
-            dropTime += rand() % 5 + 1;
+            dropTime += rand() % 4 + 1;
         }
     }
     
@@ -186,6 +186,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
                 player.setHealth(player.getHealth() - 1);
                 projFired = false;
                 footballs.erase(footballs.begin(), footballs.begin() + inc);
+                inc = 0;
                 clock.restart();
                 dropTime = 3;
             }
