@@ -23,6 +23,6 @@ private:
 	void drawEnemies();
 	void moveEnemies();
 	void checkForWallsEnemies();
-	void enemyFire(Projectile*& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime, int& finished);
+	void enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime);
 	void displayLives(Player& player);
 };

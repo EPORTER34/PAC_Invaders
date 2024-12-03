@@ -80,12 +80,11 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 void App::run()
 {
     Player player(480, window.getSize().y - 100, 3, "WSU_Logo.png");
-    Projectile* footballs = new Projectile[100];
+    vector<Projectile> footballs(250);
     Clock clock;
 
-    int dropTime = 5;
+    int dropTime = 3;
     int inc = 0;
-    int finished = 0;
     bool enemyProj = false;
     
 
@@ -103,7 +102,7 @@ void App::run()
         window.clear();
         window.draw(background);
 
-        enemyFire(footballs, player, inc, enemyProj, clock, dropTime, finished);
+        enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
         drawEnemies();
         drawPlayer(player);
         displayLives(player);
@@ -156,27 +155,27 @@ void App::checkForWallsEnemies()
     }
 }
 
-void App::enemyFire(Projectile*& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime, int& finished)
+void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime)
 {
     int randEnemy = rand() % 30;
 
    
-    if (clock.getElapsedTime().asSeconds() >= 5) // start at 5
+    if (clock.getElapsedTime().asSeconds() >= 3) // start at 3
     {
         if ((int)clock.getElapsedTime().asSeconds() == dropTime) // rounhds the time off so that we don't skip over the value
         {
-        randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
-        footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
-        inc++;
-        projFired = true;
-        dropTime += rand() % 7 + 1;
+            randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
+            footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
+            inc++;
+            projFired = true;
+            dropTime += rand() % 5 + 1;
         }
     }
     
     
     if (projFired)
     {
-        for (int i = finished; i < inc; i++)
+        for (int i = 0; i < inc; i++)
         {
             window.draw(footballs[i]);
             enemies[randEnemy].fireFootballs(footballs[i]);
@@ -186,19 +185,20 @@ void App::enemyFire(Projectile*& footballs, Player& player, int& inc, bool& proj
                 cout << "Boom!" << endl;
                 player.setHealth(player.getHealth() - 1);
                 projFired = false;
-                finished++;
+                footballs.erase(footballs.begin(), footballs.begin() + inc);
+                clock.restart();
+                dropTime = 3;
             }
         }
         
     }
 
-    if (footballs != nullptr)
+    if (!footballs.empty())
     {
         if (footballs[inc].getPosition().y >= 540)
         {
             inc++;
             projFired = false;
-            finished++;
         }
     }
 }
