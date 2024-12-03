@@ -18,6 +18,7 @@ private:
 	Player player;
 	Sprite background;
 
+	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);
 	void movePlayer(Player& player);
 	void drawEnemies();

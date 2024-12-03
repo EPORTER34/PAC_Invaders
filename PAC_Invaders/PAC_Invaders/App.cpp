@@ -82,13 +82,14 @@ void App::run()
     Player player(480, window.getSize().y - 100, "WSU_Logo.png");
     Projectile* footballs = new Projectile[100];
     Clock clock;
+    Clock movementClock;
 
     int dropTime = 5;
     int inc = 0;
     bool enemyProj = false;
     
 
-
+    
 
 
     while (window.isOpen())
@@ -110,6 +111,7 @@ void App::run()
         
         movePlayer(player);
         moveEnemies();
+        moveRow(movementClock);
         checkForWallsEnemies();
 
         
@@ -118,6 +120,18 @@ void App::run()
     }
 }
 
+
+void App::moveRow(Clock& movementClock)
+{
+    if (movementClock.getElapsedTime().asSeconds() >= 30)
+    {
+        movementClock.restart();
+        for (int i = 0; i < 40; i++)
+        {
+            enemies[i].setPosition(enemies[i].getPosition().x, enemies[i].getPosition().y + 50);
+        }
+    }
+}
 
 void App::drawPlayer(Player& player)
 {
@@ -134,7 +148,10 @@ void App::drawEnemies()
 {
     for (int i = 0; i < 40; i++)
     {
-        window.draw(enemies[i]);
+        if (enemies[i].getHealth() > 0)
+        {
+            window.draw(enemies[i]);
+        }
     }
 }
 
