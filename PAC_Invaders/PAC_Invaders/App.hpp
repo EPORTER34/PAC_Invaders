@@ -17,6 +17,8 @@ private:
 	RenderWindow window;
 	Player player;
 	Sprite background;
+	Font menuFont;
+	Text gameOverText;
 
 	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);

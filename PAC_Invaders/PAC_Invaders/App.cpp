@@ -17,6 +17,14 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 
     background.setTexture(Logos[9]);
 
+    //setting menu, tutorial, & game over text
+    menuFont.loadFromFile("ARIALBD.TTF");
+    gameOverText.setFont(menuFont);
+    gameOverText.setString("Game Over");
+    gameOverText.setPosition(320,100);
+    gameOverText.setCharacterSize(64);
+    gameOverText.setFillColor(Color::Red);
+
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -103,16 +111,21 @@ void App::run()
         window.clear();
         window.draw(background);
 
-        enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
-        drawEnemies();
-        drawPlayer(player);
-        displayLives(player);
-
+        if (player.getHealth() > 0)
+        {
+            enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
+            drawEnemies();
+            drawPlayer(player);
+            displayLives(player);
+            movePlayer(player);
+            moveRow(movementClock);
+        }
+        else
+        {
+            window.draw(gameOverText);
+        }
         
         
-        movePlayer(player);
-        moveRow(movementClock);
-
         
 
         window.display();
