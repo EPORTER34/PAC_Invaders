@@ -1,6 +1,6 @@
 #include "wsuPlayer.hpp"
 
-Player::Player(float x, float y, const string& spriteFile)
+Player::Player(float x, float y, int newHealth, const string& spriteFile)
 {
 	if (!texture.loadFromFile(spriteFile))
 	{
@@ -8,6 +8,7 @@ Player::Player(float x, float y, const string& spriteFile)
 	}
 	setTexture(texture);
 	setPosition(x, y);
+	health = newHealth;
 }
 
 void Player::update()
@@ -41,6 +42,16 @@ void Player::playerBounds(RenderWindow& window)
 
 	this->setPosition(position);//updating where the position is
 
+}
+
+void Player::setHealth(int newHealth)
+{
+	health = newHealth;
+}
+
+int Player::getHealth()
+{
+	return health;
 }
 
 

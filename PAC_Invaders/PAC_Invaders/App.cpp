@@ -183,6 +183,7 @@ void App::enemyFire(Projectile*& footballs, Player& player, int& inc, bool& proj
             if (footballs[i].getGlobalBounds().intersects(player.getGlobalBounds()))
             {
                 cout << "Boom!" << endl;
+                player.setHealth(player.getHealth() - 1);
                 projFired = false;
                 finished++;
             }
