@@ -1,6 +1,6 @@
 #include "wsuPlayer.hpp"
 
-Player::Player(float x, float y, const string& spriteFile)
+Player::Player(float x, float y, int newHealth, const string& spriteFile)
 {
 	if (!texture.loadFromFile(spriteFile))
 	{
@@ -8,17 +8,18 @@ Player::Player(float x, float y, const string& spriteFile)
 	}
 	setTexture(texture);
 	setPosition(x, y);
+	health = newHealth;
 }
 
 void Player::update()
 {
 	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 	{
-		this->move(-0.1f, 0.0); //feel free to change speed if its too fast or slow
+		this->move(-0.2f, 0.0); //feel free to change speed if its too fast or slow
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 	{
-		this->move(0.1f, 0.0f);
+		this->move(0.2f, 0.0f);
 	}
 }
 
@@ -41,6 +42,16 @@ void Player::playerBounds(RenderWindow& window)
 
 	this->setPosition(position);//updating where the position is
 
+}
+
+void Player::setHealth(int newHealth)
+{
+	health = newHealth;
+}
+
+int Player::getHealth()
+{
+	return health;
 }
 
 
