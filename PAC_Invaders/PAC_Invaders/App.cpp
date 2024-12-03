@@ -124,7 +124,7 @@ void App::run()
 
 void App::moveRow(Clock& movementClock)
 {
-    if (movementClock.getElapsedTime().asSeconds() >= 30)
+    if (movementClock.getElapsedTime().asSeconds() >= 20)
     {
         movementClock.restart();
         for (int i = 0; i < 40; i++)
@@ -203,6 +203,13 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
                 player.setHealth(player.getHealth() - 1);
                 projFired = false;
                 footballs.erase(footballs.begin(), footballs.begin() + inc);
+                for (int row = 0; row < 3; row++) //resetting enemy position to top of the screen
+                {
+                    for (int column = 0; column < 10; column++)
+                    {
+                        enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
+                    }
+                }
                 inc = 0;
                 clock.restart();
                 dropTime = 3;
