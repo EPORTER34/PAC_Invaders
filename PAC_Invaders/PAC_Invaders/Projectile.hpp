@@ -16,7 +16,12 @@ public:
 		}
 
 		this->setScale(0.075, 0.075);
+		fired = false;
 	}
+
+	void setFired(bool isFired);
+	bool getFired();
 private:
 	Texture texture;
+	bool fired;
 };
