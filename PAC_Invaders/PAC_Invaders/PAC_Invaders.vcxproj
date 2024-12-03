@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="hitBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="wsuPlayer.cpp" />
@@ -145,7 +144,6 @@
     <ClInclude Include="Background.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="header.hpp" />
-    <ClInclude Include="hitBox.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="wsuPlayer.hpp" />
   </ItemGroup>

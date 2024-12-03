@@ -1,5 +1,4 @@
 #pragma once
-#include "hitBox.hpp"
 #include "Projectile.hpp"
 
 class Enemy : public Sprite

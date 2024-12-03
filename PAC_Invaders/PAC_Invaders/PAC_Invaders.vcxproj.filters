@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="hitBox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="wsuPlayer.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -12,7 +11,6 @@
     <ClInclude Include="App.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="header.hpp" />
-    <ClInclude Include="hitBox.hpp" />
     <ClInclude Include="wsuPlayer.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Background.hpp" />
