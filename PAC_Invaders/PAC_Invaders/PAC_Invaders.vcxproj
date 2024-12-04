@@ -141,7 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
-    <ClInclude Include="Background.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="header.hpp" />
     <ClInclude Include="Projectile.hpp" />

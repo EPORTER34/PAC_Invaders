@@ -28,7 +28,7 @@ private:
 	Text numbers[3];
 	Sprite tutorialImages[10];
 
-
+	
 	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);
 	void movePlayer(Player& player);
@@ -36,4 +36,6 @@ private:
 	void enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime);
 	void playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce);
 	void displayLives(Player& player);
+	void drawTutorial();
+	void resetEnemies();
 };

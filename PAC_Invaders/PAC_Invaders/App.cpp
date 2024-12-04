@@ -150,10 +150,8 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
             enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
         }
     }
-
-
-
 }
+
 
 void App::run()
 {
@@ -213,25 +211,8 @@ void App::run()
             window.draw(menuOptions[2]);
             break;
         case 1: //how to play
-            window.draw(enterToContinue);
-            tutorialImages[0].setPosition(100, 75);
-            window.draw(tutorialImages[0]);
-            window.draw(leftRight);
-            tutorialImages[0].setPosition(400, 75);
-            window.draw(tutorialImages[0]);
-            window.draw(fire);
-            window.draw(tutorialImages[9]);
-            window.draw(goal);
-            window.draw(lifeTable);
-            window.draw(numbers[0]);
-            window.draw(numbers[1]);
-            window.draw(numbers[2]);
+            drawTutorial();
             
-            for (int i = 0; i < 9; i++)
-            {
-                window.draw(tutorialImages[i]);
-            }
-
             if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
             {
                 menu = 0;
@@ -257,37 +238,11 @@ void App::run()
             {
                 menu = 0;
                 player.setHealth(3);
-                for (int row = 0; row < 3; row++) //resetting enemy health and position
-                {
-                    for (int column = 0; column < 10; column++)
-                    {
-                        switch (row)
-                        {
-                        case 0:
-                            if (column < 3 || column > 6)
-                            {
-                                enemies[column].setHealth(1);
-                            }
-                            else
-                            {
-                                enemies[column].setHealth(3);
-                            }
-                            break;
-                        case 1:
-                            enemies[column + 10].setHealth(2);
-                            break;
-                        case 2:
-                            enemies[column + 20].setHealth(1);
-                            break;
-                        }
-                        enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
-                    }
-                }
+                resetEnemies();
             }
             break;
         }
         
-
         window.display();
     }
 }
@@ -484,4 +439,55 @@ void App::displayLives(Player& player)
         window.draw(logos[0]);
     }
     
+}
+
+void App::drawTutorial()
+{
+    window.draw(enterToContinue);
+    tutorialImages[0].setPosition(100, 75);
+    window.draw(tutorialImages[0]);
+    window.draw(leftRight);
+    tutorialImages[0].setPosition(400, 75);
+    window.draw(tutorialImages[0]);
+    window.draw(fire);
+    window.draw(tutorialImages[9]);
+    window.draw(goal);
+    window.draw(lifeTable);
+    window.draw(numbers[0]);
+    window.draw(numbers[1]);
+    window.draw(numbers[2]);
+    for (int i = 0; i < 9; i++)
+    {
+        window.draw(tutorialImages[i]);
+    }
+}
+
+void App::resetEnemies()
+{
+    for (int row = 0; row < 3; row++) //resetting enemy health and position
+    {
+        for (int column = 0; column < 10; column++)
+        {
+            switch (row)
+            {
+            case 0:
+                if (column < 3 || column > 6)
+                {
+                    enemies[column].setHealth(1);
+                }
+                else
+                {
+                    enemies[column].setHealth(3);
+                }
+                break;
+            case 1:
+                enemies[column + 10].setHealth(2);
+                break;
+            case 2:
+                enemies[column + 20].setHealth(1);
+                break;
+            }
+            enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
+        }
+    }
 }

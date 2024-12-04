@@ -13,7 +13,6 @@
     <ClInclude Include="header.hpp" />
     <ClInclude Include="wsuPlayer.hpp" />
     <ClInclude Include="Projectile.hpp" />
-    <ClInclude Include="Background.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="WSU_Logo.png" />

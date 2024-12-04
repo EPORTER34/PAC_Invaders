@@ -15,14 +15,6 @@ void Enemy::setHealth(int newHealth)
 	health = newHealth;
 }
 
-void Enemy::checkForWalls()
-{
-	if (getPosition().y >= 540)
-	{
-		setPosition(getPosition().x, -100);
-	}
-}
-
 
 void Enemy::fireFootballs(Projectile& football)
 {
