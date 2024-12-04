@@ -152,7 +152,7 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 
 void App::run()
 {
-    Player player(480, window.getSize().y - 100, 3, "WSU_Logo.png");
+    Player player(480, window.getSize().y - 100, "WSU_Logo.png");
 
     vector<Projectile> enemyBalls(250);
     vector<Projectile> playerBalls(250);
@@ -259,7 +259,7 @@ void App::moveRow(Clock& movementClock)
 
 void App::drawPlayer(Player& player)
 {
-    player.draw(window);
+    window.draw(player);
 }
 
 void App::movePlayer(Player& player)
@@ -293,6 +293,10 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
         if ((int)clock.getElapsedTime().asSeconds() == dropTime) // rounhds the time off so that we don't skip over the value
         {
             randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
+            while (enemies[randEnemy].getHealth() == 0)
+            {
+                randEnemy = rand() % 30; // keep generating new enemies until we have one that isn't dead
+            }
             footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
             inc++;
             projFired = true;

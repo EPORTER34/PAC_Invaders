@@ -1,22 +1,31 @@
 #pragma once
 #include "header.hpp"
 #include "Projectile.hpp"
+#include "character.hpp"
 
-class Player : public Sprite
+class Player : public Character
 {
 public:
-	Player(float x = 0.0, float y = 0.0, int newHealth = 3, const string& spriteFile = "WSU_Logo.png");
+	Player(float x = 0.0, float y = 0.0, string spriteFIle = "") : Character(3)
+	{
+		if (!texture.loadFromFile("WSU_Logo.png"))
+		{
+			cout << "error finding file" << endl;
+		}
+		else
+		{
+			setTexture(texture);
+		}
+
+		this->setPosition(x, y);
+	}
 
 	void update();
 	void draw(RenderWindow& window) const;
 	void playerBounds(RenderWindow& window);
 
-	void setHealth(int newHealth);
-	int getHealth();
-
 	void fireFootballs(Projectile& football);
-
 private:
-	Texture texture; //using texture class
-	int health;
+	Texture texture;
+	string spriteFile;
 };

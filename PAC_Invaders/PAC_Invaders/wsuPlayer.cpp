@@ -1,15 +1,5 @@
 #include "wsuPlayer.hpp"
 
-Player::Player(float x, float y, int newHealth, const string& spriteFile)
-{
-	if (!texture.loadFromFile(spriteFile))
-	{
-		cout << "error getting sprite";
-	}
-	setTexture(texture);
-	setPosition(x, y);
-	health = newHealth;
-}
 
 void Player::update()
 {
@@ -44,15 +34,7 @@ void Player::playerBounds(RenderWindow& window)
 
 }
 
-void Player::setHealth(int newHealth)
-{
-	health = newHealth;
-}
 
-int Player::getHealth()
-{
-	return health;
-}
 
 void Player::fireFootballs(Projectile& football)
 {

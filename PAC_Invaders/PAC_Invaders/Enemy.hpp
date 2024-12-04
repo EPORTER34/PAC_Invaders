@@ -1,13 +1,13 @@
 #pragma once
 #include "Projectile.hpp"
+#include "header.hpp"
+#include "Character.hpp"
 
-class Enemy : public Sprite
+class Enemy : public Character
 {
 public:
-	Enemy();
-	int getHealth();
-	void setHealth(int newHealth);
+	Enemy() : Character() 
+	{
+	}
 	void fireFootballs(Projectile& football);
-protected:
-	int health;
 };

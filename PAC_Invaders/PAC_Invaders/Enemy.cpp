@@ -1,20 +1,5 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy()
-{
-	health = 0;
-}
-
-int Enemy::getHealth()
-{
-	return health;
-}
-
-void Enemy::setHealth(int newHealth)
-{
-	health = newHealth;
-}
-
 
 void Enemy::fireFootballs(Projectile& football)
 {
