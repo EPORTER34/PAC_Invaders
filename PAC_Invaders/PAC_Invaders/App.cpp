@@ -236,7 +236,8 @@ void App::run()
             }
             break;
         case 2: //main game
-            enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
+            enemyFire(enemyBalls, player, enemyInc, enemyProj, clock, dropTime);
+            playerFire(player, playerBalls, playerInc, event, keyPressedOnce);
             drawEnemies();
             drawPlayer(player);
             displayLives(player);
