@@ -49,6 +49,31 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     lifeTable.setPosition(30, 250);
     lifeTable.setCharacterSize(16);
     lifeTable.setFillColor(Color::Red);
+    for (int i = 0; i < 3; i++)
+    {
+        numbers[i].setFont(menuFont);
+        numbers[i].setPosition(2, 300 + 50 * i);
+        numbers[i].setFillColor(Color::Red);
+        numbers[i].setCharacterSize(24);
+    }
+    numbers[0].setString("1");
+    numbers[1].setString("2");
+    numbers[2].setString("3");
+    for (int i = 0; i < 3; i++)
+    {
+        menuOptions[i].setFont(menuFont);
+        menuOptions[i].setPosition(350, 175 + 75 * i);
+        menuOptions[i].setFillColor(Color::Red);
+        menuOptions[i].setCharacterSize(48);
+    }
+    menuOptions[0].setString("(1)Play");
+    menuOptions[1].setString("(2)How to Play");
+    menuOptions[2].setString("(3)Exit");
+    enterToContinue.setFont(menuFont);
+    enterToContinue.setPosition(220, 470);
+    enterToContinue.setFillColor(Color::Red);
+    enterToContinue.setCharacterSize(48);
+    enterToContinue.setString("Press Enter to Continue");
 
     //logos for the tutorial
     for (int i = 0; i < 9; i++)
@@ -66,35 +91,7 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     tutorialImages[8].setPosition(170, 350);
     tutorialImages[2].setPosition(30, 400);
 
-    for (int i = 0; i < 3; i++)
-    {
-        numbers[i].setFont(menuFont);
-        numbers[i].setPosition(2, 300 + 50 * i);
-        numbers[i].setFillColor(Color::Red);
-        numbers[i].setCharacterSize(24);
-    }
-    numbers[0].setString("1");
-    numbers[1].setString("2");
-    numbers[2].setString("3");
-
-    for (int i = 0; i < 3; i++)
-    {
-        menuOptions[i].setFont(menuFont);
-        menuOptions[i].setPosition(350, 175 + 75*i);
-        menuOptions[i].setFillColor(Color::Red);
-        menuOptions[i].setCharacterSize(48);
-    }
-    menuOptions[0].setString("(1)Play");
-    menuOptions[1].setString("(2)How to Play");
-    menuOptions[2].setString("(3)Exit");
-
-    enterToContinue.setFont(menuFont);
-    enterToContinue.setPosition(220, 470);
-    enterToContinue.setFillColor(Color::Red);
-    enterToContinue.setCharacterSize(48);
-    enterToContinue.setString("Press Enter to Continue");
-
-
+    
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
