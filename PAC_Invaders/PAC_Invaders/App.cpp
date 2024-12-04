@@ -159,7 +159,6 @@ void App::run()
 
     Clock clock;
     Clock movementClock;
-    Clock levelClock;
 
     int dropTime = 3;
     int enemyInc = 0;
@@ -227,8 +226,6 @@ void App::run()
             if (levelCleared())
             {
                 resetEnemies();
-                levelClock.restart();
-                while (levelClock.getElapsedTime().asSeconds() > 3){}
             }
             if (player.getHealth() <= 0)
             {
