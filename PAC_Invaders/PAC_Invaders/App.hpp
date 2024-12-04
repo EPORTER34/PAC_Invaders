@@ -15,7 +15,6 @@ private:
 	Texture Logos[10];
 	Enemy enemies[30];
 	RenderWindow window;
-	Player player;
 	Sprite background;
 	Font menuFont;
 	Text gameOverText;
@@ -35,5 +34,6 @@ private:
 	void movePlayer(Player& player);
 	void drawEnemies();
 	void enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime);
+	void playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce);
 	void displayLives(Player& player);
 };

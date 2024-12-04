@@ -54,4 +54,12 @@ int Player::getHealth()
 	return health;
 }
 
+void Player::fireFootballs(Projectile& football)
+{
+	if (football.getGlobalBounds().top + football.getGlobalBounds().height >= 0)
+	{
+		football.move(0, -0.125);
+	}
+}
+
 

@@ -158,13 +158,19 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 void App::run()
 {
     Player player(480, window.getSize().y - 100, 3, "WSU_Logo.png");
-    vector<Projectile> footballs(250);
+
+    vector<Projectile> enemyBalls(250);
+    vector<Projectile> playerBalls(250);
+
     Clock clock;
     Clock movementClock;
 
     int dropTime = 3;
-    int inc = 0;
+    int enemyInc = 0;
+    int playerInc = 0;
+
     bool enemyProj = false;
+    bool keyPressedOnce = false;
     int menu = 0;
 
     Texture temp;
@@ -271,8 +277,6 @@ void App::run()
             break;
         }
         
-        
-        
 
         window.display();
     }
@@ -309,6 +313,10 @@ void App::drawEnemies()
         if (enemies[i].getHealth() > 0)
         {
             window.draw(enemies[i]);
+        }
+        else
+        {
+            enemies[i].setPosition(-30, -30);
         }
     }
 }
@@ -367,6 +375,67 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
             projFired = false;
         }
     }
+}
+
+void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce)
+{
+    int hit = -1;
+
+    if (event.type == Event::KeyPressed && !keyPressedOnce)
+    {
+        if (event.key.code == Keyboard::Up)
+        {
+            playerBalls[playerInc].setPosition(player.getPosition());
+            playerBalls[playerInc].setFired(true);
+            playerInc++;
+            keyPressedOnce = true;
+        }
+    }
+
+    if (event.type == Event::KeyReleased)
+    {
+        if (event.key.code == Keyboard::Up)
+        {
+            keyPressedOnce = false;
+        }
+    }
+
+    for (int i = 0; i < playerInc; i++)
+    {
+        if (playerBalls[i].getFired() == true)
+        {
+            window.draw(playerBalls[i]);
+            player.fireFootballs(playerBalls[i]);
+        }
+        if (playerBalls[i].getGlobalBounds().top + playerBalls[i].getGlobalBounds().height <= 0)
+        {
+            playerBalls[i].setFired(false);
+        }
+
+        for (int j = 0; j < 30; j++)
+        {
+            if (playerBalls[i].getGlobalBounds().intersects(enemies[j].getGlobalBounds()))
+            {
+                hit = j;
+            }
+        }
+
+        if (hit != -1)
+        {
+            enemies[hit].setHealth(enemies[hit].getHealth() - 1);
+            if (enemies[hit].getHealth() == 0)
+            {
+                enemies[hit].setPosition(-30, -30);
+            }
+            playerBalls[i].setFired(false);
+            playerBalls[i].setPosition(-40, -40);
+
+            hit = -1;
+        }
+        
+    }
+
+   
 }
 
 void App::displayLives(Player& player)
