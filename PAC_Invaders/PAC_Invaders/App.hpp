@@ -21,9 +21,14 @@ private:
 	Text gameOverText;
 	Text title;
 	Text menuOptions[3];
-	//Text option1;
-	//Text option2;
-	//Text option3;
+	Text enterToContinue;
+	Text leftRight;
+	Text fire;
+	Text goal;
+	Text lifeTable;
+	Text numbers[3];
+	Sprite tutorialImages[10];
+
 
 	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);

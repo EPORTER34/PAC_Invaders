@@ -29,6 +29,54 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     title.setPosition(183, 50);
     title.setCharacterSize(96);
     title.setFillColor(Color::Red);
+    leftRight.setFont(menuFont);
+    leftRight.setString("Use Left/Right Arrows for Movement");
+    leftRight.setPosition(2, 130);
+    leftRight.setCharacterSize(16);
+    leftRight.setFillColor(Color::Red);
+    fire.setFont(menuFont);
+    fire.setString("Use Up Arrow to Fire");
+    fire.setPosition(352, 130);
+    fire.setCharacterSize(16);
+    fire.setFillColor(Color::Red);
+    goal.setFont(menuFont);
+    goal.setString("Goal is to kill all enemies");
+    goal.setPosition(552, 130);
+    goal.setCharacterSize(16);
+    goal.setFillColor(Color::Red);
+    lifeTable.setFont(menuFont);
+    lifeTable.setString("Enemies have x Number of Lives");
+    lifeTable.setPosition(30, 250);
+    lifeTable.setCharacterSize(16);
+    lifeTable.setFillColor(Color::Red);
+
+    //logos for the tutorial
+    for (int i = 0; i < 9; i++)
+    {
+        tutorialImages[i].setTexture(Logos[i]);
+    }
+    tutorialImages[1].setPosition(30, 300);
+    tutorialImages[3].setPosition(100, 300);
+    tutorialImages[4].setPosition(170, 300);
+    tutorialImages[4].setScale(1.2, 1.2);
+    tutorialImages[6].setPosition(220, 300);
+    tutorialImages[6].setScale(.8, .8);
+    tutorialImages[5].setPosition(30, 350);
+    tutorialImages[7].setPosition(100, 350);
+    tutorialImages[8].setPosition(170, 350);
+    tutorialImages[2].setPosition(30, 400);
+
+    for (int i = 0; i < 3; i++)
+    {
+        numbers[i].setFont(menuFont);
+        numbers[i].setPosition(2, 300 + 50 * i);
+        numbers[i].setFillColor(Color::Red);
+        numbers[i].setCharacterSize(24);
+    }
+    numbers[0].setString("1");
+    numbers[1].setString("2");
+    numbers[2].setString("3");
+
     for (int i = 0; i < 3; i++)
     {
         menuOptions[i].setFont(menuFont);
@@ -40,7 +88,11 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     menuOptions[1].setString("(2)How to Play");
     menuOptions[2].setString("(3)Exit");
 
-
+    enterToContinue.setFont(menuFont);
+    enterToContinue.setPosition(220, 470);
+    enterToContinue.setFillColor(Color::Red);
+    enterToContinue.setCharacterSize(48);
+    enterToContinue.setString("Press Enter to Continue");
 
 
     //loading and placing each enemy
@@ -115,8 +167,11 @@ void App::run()
     bool enemyProj = false;
     int menu = 0;
 
-    
-
+    Texture temp;
+    temp.loadFromFile("pixel_football.png");
+    tutorialImages[9].setTexture(temp);
+    tutorialImages[9].setScale(.05, .05);
+    tutorialImages[9].setPosition(420,45);
 
     while (window.isOpen())
     {
@@ -150,6 +205,29 @@ void App::run()
             window.draw(menuOptions[2]);
             break;
         case 1: //how to play
+            window.draw(enterToContinue);
+            tutorialImages[0].setPosition(100, 75);
+            window.draw(tutorialImages[0]);
+            window.draw(leftRight);
+            tutorialImages[0].setPosition(400, 75);
+            window.draw(tutorialImages[0]);
+            window.draw(fire);
+            window.draw(tutorialImages[9]);
+            window.draw(goal);
+            window.draw(lifeTable);
+            window.draw(numbers[0]);
+            window.draw(numbers[1]);
+            window.draw(numbers[2]);
+            
+            for (int i = 0; i < 9; i++)
+            {
+                window.draw(tutorialImages[i]);
+            }
+
+            if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+            {
+                menu = 0;
+            }
             break;
         case 2: //main game
             enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
@@ -165,6 +243,7 @@ void App::run()
             break;
         case 3: //game over screen
             window.draw(gameOverText);
+            window.draw(enterToContinue);
             if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
             {
                 menu = 0;
@@ -327,5 +406,3 @@ void App::displayLives(Player& player)
     }
     
 }
-
-
