@@ -169,6 +169,7 @@ void App::run()
     int enemyInc = 0;
     int playerInc = 0;
 
+
     bool enemyProj = false;
     bool keyPressedOnce = false;
     int menu = 0;
@@ -196,6 +197,7 @@ void App::run()
             if (Keyboard::isKeyPressed(Keyboard::Key::Num1)) //hit play
             {
                 menu = 2;
+                movementClock.restart();
             }
             if (Keyboard::isKeyPressed(Keyboard::Key::Num2)) //hit how to play
             {
@@ -255,23 +257,30 @@ void App::run()
             {
                 menu = 0;
                 player.setHealth(3);
-                for (int i = 29; i > 0; i--) //resetting enemy health
+                for (int row = 0; row < 3; row++) //resetting enemy health and position
                 {
-                    if (i > 19)
+                    for (int column = 0; column < 10; column++)
                     {
-                        enemies[i].setHealth(1);
-                    }
-                    else if (i > 9)
-                    {
-                        enemies[i].setHealth(2);
-                    }
-                    else if ( i < 3 || i > 7)
-                    {
-                        enemies[i].setHealth(1);
-                    }
-                    else
-                    {
-                        enemies[i].setHealth(3);
+                        switch (row)
+                        {
+                        case 0:
+                            if (column < 3 || column > 6)
+                            {
+                                enemies[column].setHealth(1);
+                            }
+                            else
+                            {
+                                enemies[column].setHealth(3);
+                            }
+                            break;
+                        case 1:
+                            enemies[column + 10].setHealth(2);
+                            break;
+                        case 2:
+                            enemies[column + 20].setHealth(1);
+                            break;
+                        }
+                        enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
                     }
                 }
             }
