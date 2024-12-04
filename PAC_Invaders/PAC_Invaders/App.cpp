@@ -159,6 +159,7 @@ void App::run()
 
     Clock clock;
     Clock movementClock;
+    Clock levelClock;
 
     int dropTime = 3;
     int enemyInc = 0;
@@ -223,6 +224,12 @@ void App::run()
             displayLives(player);
             movePlayer(player);
             moveRow(movementClock);
+            if (levelCleared())
+            {
+                resetEnemies();
+                levelClock.restart();
+                while (levelClock.getElapsedTime().asSeconds() > 3){}
+            }
             if (player.getHealth() <= 0)
             {
                 menu = 3;
@@ -491,4 +498,19 @@ void App::resetEnemies()
             enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
         }
     }
+}
+
+bool App::levelCleared()
+{
+    bool result = true;
+
+    for (int i = 0; i < 30; i++)
+    {
+        if (enemies[i].getHealth() > 0)
+        {
+            result = false;
+        }
+    }
+
+    return result;
 }
