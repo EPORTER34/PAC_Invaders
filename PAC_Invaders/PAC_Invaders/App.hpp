@@ -19,6 +19,11 @@ private:
 	Sprite background;
 	Font menuFont;
 	Text gameOverText;
+	Text title;
+	Text menuOptions[3];
+	//Text option1;
+	//Text option2;
+	//Text option3;
 
 	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);

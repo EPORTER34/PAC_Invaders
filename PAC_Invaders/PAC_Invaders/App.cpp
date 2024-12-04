@@ -24,6 +24,24 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     gameOverText.setPosition(320,100);
     gameOverText.setCharacterSize(64);
     gameOverText.setFillColor(Color::Red);
+    title.setFont(menuFont);
+    title.setString("PAC Invaders");
+    title.setPosition(183, 50);
+    title.setCharacterSize(96);
+    title.setFillColor(Color::Red);
+    for (int i = 0; i < 3; i++)
+    {
+        menuOptions[i].setFont(menuFont);
+        menuOptions[i].setPosition(350, 175 + 75*i);
+        menuOptions[i].setFillColor(Color::Red);
+        menuOptions[i].setCharacterSize(48);
+    }
+    menuOptions[0].setString("(1)Play");
+    menuOptions[1].setString("(2)How to Play");
+    menuOptions[2].setString("(3)Exit");
+
+
+
 
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
@@ -126,6 +144,10 @@ void App::run()
             {
                 window.close();
             }
+            window.draw(title);
+            window.draw(menuOptions[0]);
+            window.draw(menuOptions[1]);
+            window.draw(menuOptions[2]);
             break;
         case 1: //how to play
             break;
