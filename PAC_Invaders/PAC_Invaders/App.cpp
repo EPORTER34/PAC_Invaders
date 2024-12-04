@@ -17,6 +17,84 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 
     background.setTexture(Logos[9]);
 
+    //setting menu, tutorial, & game over text
+    menuFont.loadFromFile("ARIALBD.TTF");
+    gameOverText.setFont(menuFont);
+    gameOverText.setString("Game Over");
+    gameOverText.setPosition(320,100);
+    gameOverText.setCharacterSize(64);
+    gameOverText.setFillColor(Color::Red);
+    title.setFont(menuFont);
+    title.setString("PAC Invaders");
+    title.setPosition(183, 50);
+    title.setCharacterSize(96);
+    title.setFillColor(Color::Red);
+    leftRight.setFont(menuFont);
+    leftRight.setString("Use Left/Right Arrows for Movement");
+    leftRight.setPosition(2, 130);
+    leftRight.setCharacterSize(16);
+    leftRight.setFillColor(Color::Red);
+    fire.setFont(menuFont);
+    fire.setString("Use Up Arrow to Fire");
+    fire.setPosition(352, 130);
+    fire.setCharacterSize(16);
+    fire.setFillColor(Color::Red);
+    goal.setFont(menuFont);
+    goal.setString("Goal is to kill all enemies");
+    goal.setPosition(552, 130);
+    goal.setCharacterSize(16);
+    goal.setFillColor(Color::Red);
+    lifeTable.setFont(menuFont);
+    lifeTable.setString("Enemies have x Number of Lives");
+    lifeTable.setPosition(30, 250);
+    lifeTable.setCharacterSize(16);
+    lifeTable.setFillColor(Color::Red);
+
+    //logos for the tutorial
+    for (int i = 0; i < 9; i++)
+    {
+        tutorialImages[i].setTexture(Logos[i]);
+    }
+    tutorialImages[1].setPosition(30, 300);
+    tutorialImages[3].setPosition(100, 300);
+    tutorialImages[4].setPosition(170, 300);
+    tutorialImages[4].setScale(1.2, 1.2);
+    tutorialImages[6].setPosition(220, 300);
+    tutorialImages[6].setScale(.8, .8);
+    tutorialImages[5].setPosition(30, 350);
+    tutorialImages[7].setPosition(100, 350);
+    tutorialImages[8].setPosition(170, 350);
+    tutorialImages[2].setPosition(30, 400);
+
+    for (int i = 0; i < 3; i++)
+    {
+        numbers[i].setFont(menuFont);
+        numbers[i].setPosition(2, 300 + 50 * i);
+        numbers[i].setFillColor(Color::Red);
+        numbers[i].setCharacterSize(24);
+    }
+    numbers[0].setString("1");
+    numbers[1].setString("2");
+    numbers[2].setString("3");
+
+    for (int i = 0; i < 3; i++)
+    {
+        menuOptions[i].setFont(menuFont);
+        menuOptions[i].setPosition(350, 175 + 75*i);
+        menuOptions[i].setFillColor(Color::Red);
+        menuOptions[i].setCharacterSize(48);
+    }
+    menuOptions[0].setString("(1)Play");
+    menuOptions[1].setString("(2)How to Play");
+    menuOptions[2].setString("(3)Exit");
+
+    enterToContinue.setFont(menuFont);
+    enterToContinue.setPosition(220, 470);
+    enterToContinue.setFillColor(Color::Red);
+    enterToContinue.setCharacterSize(48);
+    enterToContinue.setString("Press Enter to Continue");
+
+
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -93,10 +171,13 @@ void App::run()
 
     bool enemyProj = false;
     bool keyPressedOnce = false;
-    
+    int menu = 0;
 
-    
-
+    Texture temp;
+    temp.loadFromFile("pixel_football.png");
+    tutorialImages[9].setTexture(temp);
+    tutorialImages[9].setScale(.05, .05);
+    tutorialImages[9].setPosition(420,45);
 
     while (window.isOpen())
     {
@@ -109,17 +190,92 @@ void App::run()
         window.clear();
         window.draw(background);
 
-        enemyFire(enemyBalls, player, enemyInc, enemyProj, clock, dropTime);
-        drawEnemies();
-        drawPlayer(player);
-        displayLives(player);
+        switch (menu)
+        {
+        case 0: //main menu
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num1)) //hit play
+            {
+                menu = 2;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num2)) //hit how to play
+            {
+                menu = 1;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Key::Num3)) //hit exit
+            {
+                window.close();
+            }
+            window.draw(title);
+            window.draw(menuOptions[0]);
+            window.draw(menuOptions[1]);
+            window.draw(menuOptions[2]);
+            break;
+        case 1: //how to play
+            window.draw(enterToContinue);
+            tutorialImages[0].setPosition(100, 75);
+            window.draw(tutorialImages[0]);
+            window.draw(leftRight);
+            tutorialImages[0].setPosition(400, 75);
+            window.draw(tutorialImages[0]);
+            window.draw(fire);
+            window.draw(tutorialImages[9]);
+            window.draw(goal);
+            window.draw(lifeTable);
+            window.draw(numbers[0]);
+            window.draw(numbers[1]);
+            window.draw(numbers[2]);
+            
+            for (int i = 0; i < 9; i++)
+            {
+                window.draw(tutorialImages[i]);
+            }
 
-        
-        
-        movePlayer(player);
-        playerFire(player, playerBalls, playerInc, event, keyPressedOnce);
-        moveRow(movementClock);
-
+            if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+            {
+                menu = 0;
+            }
+            break;
+        case 2: //main game
+            enemyFire(footballs, player, inc, enemyProj, clock, dropTime);
+            drawEnemies();
+            drawPlayer(player);
+            displayLives(player);
+            movePlayer(player);
+            moveRow(movementClock);
+            if (player.getHealth() <= 0)
+            {
+                menu = 3;
+            }
+            break;
+        case 3: //game over screen
+            window.draw(gameOverText);
+            window.draw(enterToContinue);
+            if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
+            {
+                menu = 0;
+                player.setHealth(3);
+                for (int i = 29; i > 0; i--) //resetting enemy health
+                {
+                    if (i > 19)
+                    {
+                        enemies[i].setHealth(1);
+                    }
+                    else if (i > 9)
+                    {
+                        enemies[i].setHealth(2);
+                    }
+                    else if ( i < 3 || i > 7)
+                    {
+                        enemies[i].setHealth(1);
+                    }
+                    else
+                    {
+                        enemies[i].setHealth(3);
+                    }
+                }
+            }
+            break;
+        }
         
 
         window.display();
@@ -132,7 +288,7 @@ void App::moveRow(Clock& movementClock)
     if (movementClock.getElapsedTime().asSeconds() >= 20)
     {
         movementClock.restart();
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 30; i++)
         {
             enemies[i].setPosition(enemies[i].getPosition().x, enemies[i].getPosition().y + 50);
         }
@@ -152,7 +308,7 @@ void App::movePlayer(Player& player)
 
 void App::drawEnemies()
 {
-    for (int i = 0; i < 40; i++)
+    for (int i = 0; i < 30; i++)
     {
         if (enemies[i].getHealth() > 0)
         {
@@ -319,5 +475,3 @@ void App::displayLives(Player& player)
     }
     
 }
-
-

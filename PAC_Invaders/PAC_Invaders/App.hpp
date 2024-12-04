@@ -13,9 +13,21 @@ public:
 	void run();
 private:
 	Texture Logos[10];
-	Enemy enemies[40];
+	Enemy enemies[30];
 	RenderWindow window;
 	Sprite background;
+	Font menuFont;
+	Text gameOverText;
+	Text title;
+	Text menuOptions[3];
+	Text enterToContinue;
+	Text leftRight;
+	Text fire;
+	Text goal;
+	Text lifeTable;
+	Text numbers[3];
+	Sprite tutorialImages[10];
+
 
 	void moveRow(Clock& movementClock);
 	void drawPlayer(Player& player);
