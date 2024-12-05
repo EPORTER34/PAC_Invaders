@@ -173,6 +173,7 @@ void App::run()
     int enemyInc = 0;
     int playerInc = 0;
     int menu = 0;
+    int round = 0;
 
     bool enemyProj = false;
     bool keyPressedOnce = false;
@@ -230,10 +231,11 @@ void App::run()
             drawPlayer(player);
             displayLives(player);
             movePlayer(player);
-            moveRow(movementClock);
+            moveRow(movementClock,round);
             if (levelCleared())
             {
                 resetEnemies();
+                round--;
             }
             if (player.getHealth() <= 0)
             {
@@ -257,9 +259,9 @@ void App::run()
 }
 
 
-void App::moveRow(Clock& movementClock)
+void App::moveRow(Clock& movementClock, int round)
 {
-    if (movementClock.getElapsedTime().asSeconds() >= 10)
+    if (movementClock.getElapsedTime().asSeconds() >= 10 - .1 * round)
     {
         movementClock.restart();
         for (int i = 0; i < 30; i++)

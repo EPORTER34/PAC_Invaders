@@ -29,7 +29,7 @@ private:
 	Sprite tutorialImages[10];
 
 	
-	void moveRow(Clock& movementClock);
+	void moveRow(Clock& movementClock, int round);
 	void drawPlayer(Player& player);
 	void movePlayer(Player& player);
 	void drawEnemies();
