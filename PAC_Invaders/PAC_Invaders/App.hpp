@@ -38,4 +38,5 @@ private:
 	void displayLives(Player& player);
 	void drawTutorial();
 	void resetEnemies();
+	bool levelCleared();
 };
