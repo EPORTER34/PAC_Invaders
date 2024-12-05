@@ -150,6 +150,14 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 }
 
 
+// some quick notes for completing
+
+// when the game is reset after a player loses their life, all of the enemies should be moved to the top again, 
+// and both vectors need to be cleared to avoid going out of range
+
+// I think the balance in speeds right now is still a little off, we probably need to make the time to move 
+// the row down a little slower
+
 void App::run()
 {
     Player player(480, window.getSize().y - 100, "WSU_Logo.png");
@@ -251,7 +259,7 @@ void App::run()
 
 void App::moveRow(Clock& movementClock)
 {
-    if (movementClock.getElapsedTime().asSeconds() >= 20)
+    if (movementClock.getElapsedTime().asSeconds() >= 10)
     {
         movementClock.restart();
         for (int i = 0; i < 30; i++)
@@ -294,7 +302,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
    
     if (clock.getElapsedTime().asSeconds() >= 3) // start at 3
     {
-        if ((int)clock.getElapsedTime().asSeconds() == dropTime) // rounhds the time off so that we don't skip over the value
+        if (clock.getElapsedTime().asSeconds() > dropTime) // rounhds the time off so that we don't skip over the value
         {
             randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
             while (enemies[randEnemy].getHealth() == 0)
@@ -304,7 +312,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
             footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
             inc++;
             projFired = true;
-            dropTime += rand() % 4 + 1;
+            dropTime += rand() % 2 + 1;
         }
     }
     
@@ -353,7 +361,7 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
 
     if (event.type == Event::KeyPressed && !keyPressedOnce)
     {
-        if (clock.getElapsedTime().asSeconds() > 1.5)
+        if (clock.getElapsedTime().asSeconds() > .75)
         {
             if (event.key.code == Keyboard::Up)
             {
@@ -363,7 +371,17 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
                 clock.restart();
                 keyPressedOnce = true;
             }
-        }   
+        }
+        // no cooldown for testing
+
+        /*if (event.key.code == Keyboard::Up)
+        {
+            playerBalls[playerInc].setPosition(player.getPosition());
+            playerBalls[playerInc].setFired(true);
+            playerInc++;
+            clock.restart();
+            keyPressedOnce = true;
+        }*/  
     }
 
     if (event.type == Event::KeyReleased)

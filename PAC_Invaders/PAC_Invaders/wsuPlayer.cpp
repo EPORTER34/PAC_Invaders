@@ -40,7 +40,7 @@ void Player::fireFootballs(Projectile& football)
 {
 	if (football.getGlobalBounds().top + football.getGlobalBounds().height >= 0)
 	{
-		football.move(0, -0.125);
+		football.move(0, -0.2);
 	}
 }
 
