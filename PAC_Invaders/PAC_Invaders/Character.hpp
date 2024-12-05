@@ -9,7 +9,6 @@ class Character : public Sprite
 public:
 	Character(int newHealth = 0) : Sprite()
 	{
-		
 		health = newHealth;
 	}
 

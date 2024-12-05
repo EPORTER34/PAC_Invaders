@@ -34,7 +34,7 @@ private:
 	void movePlayer(Player& player);
 	void drawEnemies();
 	void enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime);
-	void playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce);
+	void playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce, Clock& clock);
 	void displayLives(Player& player);
 	void drawTutorial();
 	void resetEnemies();

@@ -158,16 +158,16 @@ void App::run()
     vector<Projectile> playerBalls(250);
 
     Clock clock;
+    Clock cooldownClock;
     Clock movementClock;
 
     int dropTime = 3;
     int enemyInc = 0;
     int playerInc = 0;
-
+    int menu = 0;
 
     bool enemyProj = false;
     bool keyPressedOnce = false;
-    int menu = 0;
 
     Texture temp;
     temp.loadFromFile("pixel_football.png");
@@ -217,7 +217,7 @@ void App::run()
             break;
         case 2: //main game
             enemyFire(enemyBalls, player, enemyInc, enemyProj, clock, dropTime);
-            playerFire(player, playerBalls, playerInc, event, keyPressedOnce);
+            playerFire(player, playerBalls, playerInc, event, keyPressedOnce, cooldownClock);
             drawEnemies();
             drawPlayer(player);
             displayLives(player);
@@ -343,19 +343,23 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
     }
 }
 
-void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce)
+void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce, Clock& clock)
 {
     int hit = -1;
 
     if (event.type == Event::KeyPressed && !keyPressedOnce)
     {
-        if (event.key.code == Keyboard::Up)
+        if (clock.getElapsedTime().asSeconds() > 1.5)
         {
-            playerBalls[playerInc].setPosition(player.getPosition());
-            playerBalls[playerInc].setFired(true);
-            playerInc++;
-            keyPressedOnce = true;
-        }
+            if (event.key.code == Keyboard::Up)
+            {
+                playerBalls[playerInc].setPosition(player.getPosition());
+                playerBalls[playerInc].setFired(true);
+                playerInc++;
+                clock.restart();
+                keyPressedOnce = true;
+            }
+        }   
     }
 
     if (event.type == Event::KeyReleased)
@@ -376,6 +380,7 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
         if (playerBalls[i].getGlobalBounds().top + playerBalls[i].getGlobalBounds().height <= 0)
         {
             playerBalls[i].setFired(false);
+            playerBalls[i].setPosition(-100, -100);
         }
 
         for (int j = 0; j < 30; j++)
@@ -391,17 +396,14 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
             enemies[hit].setHealth(enemies[hit].getHealth() - 1);
             if (enemies[hit].getHealth() == 0)
             {
-                enemies[hit].setPosition(-30, -30);
+                enemies[hit].setPosition(-100, -100);
             }
             playerBalls[i].setFired(false);
-            playerBalls[i].setPosition(-40, -40);
+            playerBalls[i].setPosition(-100, -100);
 
             hit = -1;
         }
-        
     }
-
-   
 }
 
 void App::displayLives(Player& player)
