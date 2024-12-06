@@ -91,7 +91,14 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
     tutorialImages[8].setPosition(170, 350);
     tutorialImages[2].setPosition(30, 400);
 
-    
+    //scoring system
+    score = 0;
+    Score.setString("Score: 0");
+    Score.setFont(menuFont);
+    Score.setFillColor(Color::Red);
+    Score.setCharacterSize(48);
+    Score.setPosition(2, 485);
+
     //loading and placing each enemy
     for (int row = 0; row < 3; row++)
     {
@@ -201,6 +208,7 @@ void App::run()
             if (Keyboard::isKeyPressed(Keyboard::Key::Num1)) //hit play
             {
                 menu = 2;
+                Score.setPosition(2, 485);
                 movementClock.restart();
             }
             if (Keyboard::isKeyPressed(Keyboard::Key::Num2)) //hit how to play
@@ -232,19 +240,24 @@ void App::run()
             displayLives(player);
             movePlayer(player);
             moveRow(movementClock,round);
+            window.draw(Score);
             if (levelCleared())
             {
                 resetEnemies();
+                score += 1000;
+                Score.setString("Score: " + to_string(score));
                 round--;
             }
             if (player.getHealth() <= 0)
             {
+                Score.setPosition(320, 175);
                 menu = 3;
             }
             break;
         case 3: //game over screen
             window.draw(gameOverText);
             window.draw(enterToContinue);
+            window.draw(Score);
             if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
             {
                 round = 0;
@@ -305,7 +318,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
    
     if (clock.getElapsedTime().asSeconds() >= 3) // start at 3
     {
-        if (clock.getElapsedTime().asSeconds() > dropTime) // rounhds the time off so that we don't skip over the value
+        if (clock.getElapsedTime().asSeconds() > dropTime) // rounds the time off so that we don't skip over the value
         {
             randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
             while (enemies[randEnemy].getHealth() == 0)
@@ -425,6 +438,8 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
             }
             playerBalls[i].setFired(false);
             playerBalls[i].setPosition(-100, -100);
+            score += 100;
+            Score.setString("Score: " + to_string(score));
 
             hit = -1;
         }

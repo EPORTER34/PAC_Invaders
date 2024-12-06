@@ -27,7 +27,8 @@ private:
 	Text lifeTable;
 	Text numbers[3];
 	Sprite tutorialImages[10];
-
+	Text Score;
+	int score;
 	
 	void moveRow(Clock& movementClock, int round);
 	void drawPlayer(Player& player);
