@@ -388,16 +388,6 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
                 keyPressedOnce = true;
             }
         }
-        // no cooldown for testing
-
-        /*if (event.key.code == Keyboard::Up)
-        {
-            playerBalls[playerInc].setPosition(player.getPosition());
-            playerBalls[playerInc].setFired(true);
-            playerInc++;
-            clock.restart();
-            keyPressedOnce = true;
-        }*/  
     }
 
     if (event.type == Event::KeyReleased)
