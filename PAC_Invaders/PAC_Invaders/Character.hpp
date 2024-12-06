@@ -1,9 +1,7 @@
 #pragma once
-
-#include "header.hpp"
 #include "Projectile.hpp"
 
-
+//abstract character class to avoid code reuse with enemy and player classes
 class Character : public Sprite
 {
 public:
@@ -17,6 +15,5 @@ public:
 
 	virtual void fireFootballs(Projectile& football) = 0;
 private:
-
 	int health;
 };

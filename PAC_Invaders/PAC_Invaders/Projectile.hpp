@@ -1,6 +1,7 @@
 #pragma once
 #include "header.hpp"
 
+//projectile class for rendering and collision detection of the footballs
 class Projectile : public Sprite
 {
 public:

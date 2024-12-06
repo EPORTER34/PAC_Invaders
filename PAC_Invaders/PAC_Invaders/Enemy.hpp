@@ -3,6 +3,7 @@
 #include "header.hpp"
 #include "Character.hpp"
 
+//class for all of the enemies
 class Enemy : public Character
 {
 public:

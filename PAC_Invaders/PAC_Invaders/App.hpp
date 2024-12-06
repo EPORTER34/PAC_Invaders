@@ -1,21 +1,21 @@
 #pragma once
 #include "Enemy.hpp"
 #include "wsuPlayer.hpp"
-#include "Projectile.hpp"
 
 
-
-
+//app container class for all of the elements used
 class App
 {
 public:
 	App();
 	void run();
 private:
-	Texture Logos[10];
-	Enemy enemies[30];
+	Texture Logos[10]; //enemies dont make copies of the texture, this keeps it in scope for rendering
+	Enemy enemies[30]; //arrary of all the enemies on the level
 	RenderWindow window;
 	Sprite background;
+
+	//text stuff is a mess, maybe cleanup?
 	Font menuFont;
 	Text gameOverText;
 	Text title;
@@ -27,6 +27,8 @@ private:
 	Text lifeTable;
 	Text numbers[3];
 	Sprite tutorialImages[10];
+
+	//scoring variables
 	Text Score;
 	int score;
 	

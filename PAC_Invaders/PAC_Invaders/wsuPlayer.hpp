@@ -3,6 +3,7 @@
 #include "Projectile.hpp"
 #include "character.hpp"
 
+//class for the user object
 class Player : public Character
 {
 public:
@@ -21,7 +22,6 @@ public:
 	}
 
 	void update();
-	void draw(RenderWindow& window) const;
 	void playerBounds(RenderWindow& window);
 
 	void fireFootballs(Projectile& football);

@@ -1,11 +1,12 @@
 #include "wsuPlayer.hpp"
 
 
+//left/right controls
 void Player::update()
 {
 	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 	{
-		this->move(-0.2f, 0.0); //feel free to change speed if its too fast or slow
+		this->move(-0.2f, 0.0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 	{
@@ -13,10 +14,6 @@ void Player::update()
 	}
 }
 
-void Player::draw(RenderWindow& window) const
-{
-	window.draw(*this);//used in main
-}
 
 void Player::playerBounds(RenderWindow& window)
 {
@@ -35,7 +32,7 @@ void Player::playerBounds(RenderWindow& window)
 }
 
 
-
+//up arror to fire projectile
 void Player::fireFootballs(Projectile& football)
 {
 	if (football.getGlobalBounds().top + football.getGlobalBounds().height >= 0)
