@@ -247,6 +247,7 @@ void App::run()
             window.draw(enterToContinue);
             if (Keyboard::isKeyPressed(Keyboard::Key::Enter))
             {
+                round = 0;
                 menu = 0;
                 player.setHealth(3);
                 resetEnemies();
