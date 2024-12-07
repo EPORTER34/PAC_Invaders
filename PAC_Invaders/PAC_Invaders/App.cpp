@@ -256,6 +256,8 @@ void App::run()
             {
                 round = 0;
                 menu = 0;
+                score += 0;
+                Score.setString("Score: " + to_string(score));
                 player.setHealth(3);
                 resetEnemies();
             }
