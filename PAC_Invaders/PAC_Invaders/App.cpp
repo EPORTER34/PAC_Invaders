@@ -157,13 +157,7 @@ App::App() : window(VideoMode(960, 540), "Pac_Invaders")
 }
 
 
-// some quick notes for completing
 
-// when the game is reset after a player loses their life, all of the enemies should be moved to the top again, 
-// and both vectors need to be cleared to avoid going out of range
-
-// I think the balance in speeds right now is still a little off, we probably need to make the time to move 
-// the row down a little slower
 
 void App::run()
 {
@@ -233,7 +227,7 @@ void App::run()
             }
             break;
         case 2: //main game
-            enemyFire(enemyBalls, player, enemyInc, enemyProj, clock, dropTime);
+            enemyFire(enemyBalls, playerBalls, player, enemyInc, enemyProj, clock, dropTime);
             playerFire(player, playerBalls, playerInc, event, keyPressedOnce, cooldownClock);
             drawEnemies();
             drawPlayer(player);
@@ -311,24 +305,24 @@ void App::drawEnemies()
     }
 }
 
-void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime)
+void App::enemyFire(vector<Projectile>& footballs,  vector<Projectile>& playerBalls, Player& player, int& inc, bool& projFired, Clock& clock, int& dropTime)
 {
     int randEnemy = rand() % 30;
 
    
     if (clock.getElapsedTime().asSeconds() >= 3) // start at 3
     {
-        if (clock.getElapsedTime().asSeconds() > dropTime) // rounds the time off so that we don't skip over the value
+        if (clock.getElapsedTime().asSeconds() > dropTime) // runs when we pass the drop time
         {
             randEnemy = rand() % 30; // chooses an enemy, will need to be altered for when enemies get taken out, probably just a check to see if health == 0
             while (enemies[randEnemy].getHealth() == 0)
             {
                 randEnemy = rand() % 30; // keep generating new enemies until we have one that isn't dead
             }
-            footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y);
+            footballs[inc].setPosition(enemies[randEnemy].getPosition().x, enemies[randEnemy].getPosition().y); // football spawns by the enemy
             inc++;
-            projFired = true;
-            dropTime += rand() % 2 + 1;
+            projFired = true; 
+            dropTime += rand() % 2 + 1; // generates a new drop time
         }
     }
     
@@ -337,14 +331,14 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
     {
         for (int i = 0; i < inc; i++)
         {
-            window.draw(footballs[i]);
+            window.draw(footballs[i]); 
             enemies[randEnemy].fireFootballs(footballs[i]);
 
-            if (footballs[i].getGlobalBounds().intersects(player.getGlobalBounds()))
+            if (footballs[i].getGlobalBounds().intersects(player.getGlobalBounds())) // handles collisions
             {
                 cout << "Boom!" << endl;
                 player.setHealth(player.getHealth() - 1);
-                projFired = false;
+                projFired = false; // projectile should no longer be rendered
                 footballs.erase(footballs.begin(), footballs.begin() + inc);
                 for (int row = 0; row < 3; row++) //resetting enemy position to top of the screen
                 {
@@ -353,9 +347,13 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
                         enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
                     }
                 }
+                footballs.clear();
+                footballs.resize(250);
+                playerBalls.clear();
+                playerBalls.resize(250);
                 inc = 0;
                 clock.restart();
-                dropTime = 3;
+                dropTime = 3; // resets drop time because the round basically reset
             }
         }
         
@@ -363,7 +361,7 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
 
     if (!footballs.empty())
     {
-        if (footballs[inc].getPosition().y >= 540)
+        if (footballs[inc].getPosition().y >= 540) // if the football goes off screen stop rendering it
         {
             inc++;
             projFired = false;
@@ -373,11 +371,11 @@ void App::enemyFire(vector<Projectile>& footballs, Player& player, int& inc, boo
 
 void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playerInc, Event event, bool& keyPressedOnce, Clock& clock)
 {
-    int hit = -1;
+    int hit = -1; // flag variable
 
-    if (event.type == Event::KeyPressed && !keyPressedOnce)
+    if (event.type == Event::KeyPressed && !keyPressedOnce) 
     {
-        if (clock.getElapsedTime().asSeconds() > .75)
+        if (clock.getElapsedTime().asSeconds() > .75) // a cooldown so that the player can't just spam footballs
         {
             if (event.key.code == Keyboard::Up)
             {
@@ -390,7 +388,7 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
         }
     }
 
-    if (event.type == Event::KeyReleased)
+    if (event.type == Event::KeyReleased) // only want the player to shoot one ball per press, no matter how long they hold it
     {
         if (event.key.code == Keyboard::Up)
         {
@@ -398,9 +396,9 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
         }
     }
 
-    for (int i = 0; i < playerInc; i++)
+    for (int i = 0; i < playerInc; i++) // 
     {
-        if (playerBalls[i].getFired() == true)
+        if (playerBalls[i].getFired() == true) 
         {
             window.draw(playerBalls[i]);
             player.fireFootballs(playerBalls[i]);
