@@ -138,6 +138,8 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Tests.cpp" />
     <ClCompile Include="wsuPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +148,7 @@
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="header.hpp" />
     <ClInclude Include="Projectile.hpp" />
+    <ClInclude Include="Test.hpp" />
     <ClInclude Include="wsuPlayer.hpp" />
   </ItemGroup>
   <ItemGroup>

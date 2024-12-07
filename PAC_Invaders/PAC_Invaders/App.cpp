@@ -266,6 +266,8 @@ void App::run()
         
         window.display();
     }
+
+    testPlayerFire();
 }
 
 
@@ -530,4 +532,62 @@ bool App::levelCleared()
     }
 
     return result;
+}
+
+void App::testPlayerFire()
+{
+    Player player(480, window.getSize().y - 100, "WSU_Logo.png");
+    Event event;
+    vector<Projectile> enemyBalls(250);
+    vector<Projectile> playerBalls(250);
+    Clock cooldownClock;
+
+
+    int playerInc = 0;
+
+    bool keyPressedOnce = false;
+
+    // testing for when a projectile is fired
+    event.type = Event::KeyPressed;
+    event.key.code = Keyboard::Up;
+    cooldownClock.restart();
+    this_thread::sleep_for(chrono::seconds(1));
+    playerFire(player, playerBalls, playerInc, event, keyPressedOnce, cooldownClock);
+
+    if (playerInc == 1)
+    {
+        cout << "projectile count increased!" << endl;
+    }
+    else
+    {
+        cout << "projectile count did not increase" << endl;
+    }
+    if (playerBalls[0].getFired() == true)
+    {
+        cout << "Projectile was fired!" << endl;
+    }
+    else
+    {
+        cout << "Projectile was not fired" << endl;
+    }
+    if (playerBalls[0].getPosition().x == player.getPosition().x)
+    {
+        cout << "projectile was fired at the correct location!" << endl;
+    }
+    else
+    {
+        cout << "projectile was not fired at the player's location" << endl;
+    }
+
+    // testing the key press and release to make sure player can't shoot more than one ball per press
+
+    event.type = Event::KeyReleased;
+    event.key.code = Keyboard::Up;
+
+    playerFire(player, playerBalls, playerInc, event, keyPressedOnce, cooldownClock);
+
+    if (keyPressedOnce == false)
+    {
+        cout << "Only one ball was fired!" << endl;
+    }
 }

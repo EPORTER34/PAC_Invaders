@@ -7,6 +7,8 @@
     <ClCompile Include="wsuPlayer.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Tests.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.hpp" />
@@ -15,6 +17,7 @@
     <ClInclude Include="wsuPlayer.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Character.hpp" />
+    <ClInclude Include="Test.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="WSU_Logo.png" />

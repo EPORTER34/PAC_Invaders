@@ -42,4 +42,7 @@ private:
 	void drawTutorial();
 	void resetEnemies();
 	bool levelCleared();
+
+	// test functions
+	void testPlayerFire();
 };

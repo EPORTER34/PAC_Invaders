@@ -2,6 +2,7 @@
 #include "wsuPlayer.hpp"
 #include "Enemy.hpp"
 #include "App.hpp"
+#include "Test.hpp"
 
 
 int main()
@@ -9,5 +10,6 @@ int main()
     srand(time(0));
     App temp;
     temp.run();
+
     return 0;
 }
