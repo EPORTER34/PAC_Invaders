@@ -7,4 +7,6 @@ class Test
 {
 public:
 	void testPlayerFIre();
+
+	void testBounds();
 };
