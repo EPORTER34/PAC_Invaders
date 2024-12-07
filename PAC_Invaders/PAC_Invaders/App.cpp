@@ -572,11 +572,28 @@ void App::testPlayerFire()
     }
     if (playerBalls[0].getPosition().x == player.getPosition().x)
     {
-        cout << "projectile was fired at the correct location!" << endl;
+        cout << "projectile was fired at the correct location!" << endl << endl;
     }
     else
     {
         cout << "projectile was not fired at the player's location" << endl;
+    }
+
+
+    // testing enemy collisions
+
+    int enemyHealth = enemies[0].getHealth();
+    playerBalls[0].setFired(true);
+    playerBalls[0].setPosition(enemies[0].getPosition());
+    playerFire(player, playerBalls, playerInc, event, keyPressedOnce, cooldownClock);
+
+    if (playerBalls[0].getFired() == false)
+    {
+        cout << "Projectile Deactivated" << endl;
+    }
+    if (enemies[0].getHealth() == enemyHealth - 1)
+    {
+        cout << "Enemy health decreased" << endl << endl;
     }
 
     // testing the key press and release to make sure player can't shoot more than one ball per press
