@@ -341,7 +341,8 @@ void App::enemyFire(vector<Projectile>& footballs,  vector<Projectile>& playerBa
                 cout << "Boom!" << endl;
                 player.setHealth(player.getHealth() - 1);
                 projFired = false; // projectile should no longer be rendered
-                footballs.erase(footballs.begin(), footballs.begin() + inc);
+                footballs[i].setPosition(-200, -200);
+
                 for (int row = 0; row < 3; row++) //resetting enemy position to top of the screen
                 {
                     for (int column = 0; column < 10; column++)
@@ -349,10 +350,8 @@ void App::enemyFire(vector<Projectile>& footballs,  vector<Projectile>& playerBa
                         enemies[column + 10 * row].setPosition(100 * column + 5, 25 + 55 * row);
                     }
                 }
-                footballs.clear();
-                footballs.resize(250);
-                playerBalls.clear();
-                playerBalls.resize(250);
+
+                
                 inc = 0;
                 clock.restart();
                 dropTime = 3; // resets drop time because the round basically reset
@@ -398,40 +397,33 @@ void App::playerFire(Player& player, vector<Projectile>& playerBalls, int& playe
         }
     }
 
-    for (int i = 0; i < playerInc; i++) // 
+    for (int i = 0; i < playerInc; i++) // runs for how many footballs we've fired
     {
-        if (playerBalls[i].getFired() == true) 
+        if (playerBalls[i].getFired() == true)  // means a projectile is fired
         {
             window.draw(playerBalls[i]);
             player.fireFootballs(playerBalls[i]);
         }
-        if (playerBalls[i].getGlobalBounds().top + playerBalls[i].getGlobalBounds().height <= 0)
+        if (playerBalls[i].getGlobalBounds().top + playerBalls[i].getGlobalBounds().height <= 0) // if the ball goes offscreen
         {
             playerBalls[i].setFired(false);
             playerBalls[i].setPosition(-100, -100);
         }
 
-        for (int j = 0; j < 30; j++)
+        for (int j = 0; j < 30; j++) // checks to see i
         {
             if (playerBalls[i].getGlobalBounds().intersects(enemies[j].getGlobalBounds()))
             {
-                hit = j;
+                enemies[j].setHealth(enemies[j].getHealth() - 1);
+                if (enemies[j].getHealth() == 0)
+                {
+                    enemies[j].setPosition(-100, -100);
+                }
+                playerBalls[i].setFired(false);
+                playerBalls[i].setPosition(-100, -100);
+                score += 100;
+                Score.setString("Score: " + to_string(score));
             }
-        }
-
-        if (hit != -1)
-        {
-            enemies[hit].setHealth(enemies[hit].getHealth() - 1);
-            if (enemies[hit].getHealth() == 0)
-            {
-                enemies[hit].setPosition(-100, -100);
-            }
-            playerBalls[i].setFired(false);
-            playerBalls[i].setPosition(-100, -100);
-            score += 100;
-            Score.setString("Score: " + to_string(score));
-
-            hit = -1;
         }
     }
 }
@@ -441,7 +433,7 @@ void App::displayLives(Player& player)
     vector<Sprite> logos(3);
     Texture texture;
 
-    if (!texture.loadFromFile("WSU_Logo.png"))
+    if (!texture.loadFromFile("WSU_Logo.png")) // loads in the textrue for the logos
     {
         cout << "error getting sprite";
     }
