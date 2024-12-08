@@ -268,6 +268,7 @@ void App::run()
     }
 
     testPlayerFire();
+    testBounds();
 }
 
 
@@ -606,5 +607,63 @@ void App::testPlayerFire()
     if (keyPressedOnce == false)
     {
         cout << "Only one ball was fired!" << endl;
+    }
+}
+
+void App::testBounds()
+{
+    Player player(480, window.getSize().y - 100, "WSU_Logo.png");
+    player.update();
+    player.playerBounds(window);
+
+    Vector2f position = player.getPosition();
+    if (position.x == 480.f)
+    {
+        cout << "player inside left boundary." << endl;
+    }
+    else
+    {
+        cout << "nothing happened" << endl;
+    }
+
+    if (position.x == (window.getSize().x - player.getGlobalBounds().width))
+    {
+        cout << "player inside right boundary." << endl;
+    }
+    else
+    {
+        cout << "nothing happened" << endl;
+    }
+
+
+    bool movedLeft = false;
+    bool movedRight = false;
+    cout << "press left and right keys plz :)" << endl;
+    while (!movedLeft)
+    {
+        if (Keyboard::isKeyPressed(Keyboard::Left))
+        {
+            player.move(-0.2f, 0.0f);
+            if (player.getPosition().x < 200.f)
+            {
+                player.update();
+                cout << "Player moved left successfully." << endl;
+                movedLeft = true;
+            }
+        }
+    }
+
+    while (!movedRight)
+    {
+        if (Keyboard::isKeyPressed(Keyboard::Right))
+        {
+            player.move(0.2f, 0.0f);
+            if (player.getPosition().x > 200.f)
+            {
+                player.update();
+                cout << "Player moved right successfully." << endl;
+                movedRight = true;
+            }
+        }
     }
 }

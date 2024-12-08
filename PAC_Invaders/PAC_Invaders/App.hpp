@@ -45,4 +45,5 @@ private:
 
 	// test functions
 	void testPlayerFire();
+	void testBounds();
 };
